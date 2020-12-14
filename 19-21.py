@@ -1,4 +1,6 @@
-win_amount = 82  # Необходимо выставить общее число монеток для победы(минимальное необходимое, >=)
+init_heap = 3  # Начальное количество камней во второй кучке
+win_amount = 61  # Необходимо выставить общее число монеток для победы(минимальное необходимое, >=)
+max_second_heap = 57  # Максимальное количество камней во второй кучке.
 
 
 # генератор кучек, создает всевозможные выходы из текущей позиции
@@ -28,16 +30,22 @@ def second_step_win(heap):
     return False
 
 
-# --- Алгоритм для 20 задачи ---
-# for s in range(1, 69):
-#     if second_step_win((7, s)):
-#         print(s)
+# --- Алгоритм для 19 задачи (https://inf-ege.sdamgia.ru/problem?id=27754) ---
+for s in range(1, max_second_heap):
+    entries = generate_steps(s, init_heap)
+    if any(map(first_step_win, entries)):
+        print(s)
+        break
 
+# --- Алгоритм для 20 задачи(https://inf-ege.sdamgia.ru/problem?id=27755) ---
+for s in range(1, max_second_heap):
+    if second_step_win((init_heap, s)):
+        print(s)
 
-# --- Алгоритм для 21 задачи ---
-for s in range(1, 69):
+# --- Алгоритм для 21 задачи(https://inf-ege.sdamgia.ru/problem?id=27756) ---
+for s in range(1, max_second_heap):
     flag = 1
-    second_entries = generate_steps(4, s)
+    second_entries = generate_steps(init_heap, s)
     if all(map(first_step_win, second_entries)):
         continue
     for _entry in second_entries:
